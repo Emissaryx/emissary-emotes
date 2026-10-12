@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Interface.xsd">
+<Assets>
+    <Texture name="EmissaryEmotesIcon" file="EmissaryEmotesIcon.tga" />
+</Assets>
+<Windows>
+
+<!-- Emporium-inspired black/yellow design system -->
+<Window name="EE_TitleBar" handleinput="true">
+    <Size><AbsPoint x="350" y="36"/></Size>
+    <Anchors>
+        <Anchor point="topleft" relativePoint="topleft"><AbsPoint x="0" y="3"/></Anchor>
+        <Anchor point="topright" relativePoint="topright"><AbsPoint x="0" y="3"/></Anchor>
+    </Anchors>
+    <Windows>
+        <HorizontalResizeImage name="$parentBackground" inherits="EA_HorizontalResizeImage_DefaultTopFrame">
+            <Anchors>
+                <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"/>
+                <Anchor point="topright" relativePoint="topright" relativeTo="$parent"/>
+            </Anchors>
+        </HorizontalResizeImage>
+        <Label name="$parentText" font="font_clear_large" maxchars="64" textalign="center">
+            <Anchors>
+                <Anchor point="topleft" relativePoint="topleft"><AbsPoint x="70" y="5"/></Anchor>
+                <Anchor point="topright" relativePoint="topright"><AbsPoint x="-70" y="5"/></Anchor>
+            </Anchors>
+            <Color r="255" g="218" b="48" a="255"/>
+        </Label>
+    </Windows>
+</Window>
+
+<Button name="EE_Tab" textalign="center">
+    <Size><AbsPoint x="124" y="28"/></Size>
+    <ResizeImages>
+        <Normal def="EA_Button_ListSortNormal"/>
+        <NormalHighlit def="EA_Button_ListSortHighlight"/>
+        <Pressed def="EA_Button_ListSortPressed"/>
+        <Disabled def="EA_Button_ListSortNormal"/>
+    </ResizeImages>
+    <Windows>
+        <FullResizeImage name="$parentPill" inherits="EA_FullResizeImage_TintableSolidBackground" layer="background" handleinput="false" showing="false">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"/><Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent"/></Anchors>
+            <TintColor r="246" g="198" b="24"/>
+        </FullResizeImage>
+        <Label name="$parentLabel" font="font_clear_small_bold" maxchars="24" handleinput="false" textalign="center" layer="overlay">
+            <Size><AbsPoint x="124" y="28"/></Size>
+            <Anchors><Anchor point="center" relativePoint="center" relativeTo="$parent"/></Anchors>
+            <Color r="218" g="194" b="96" a="255"/>
+        </Label>
+    </Windows>
+</Button>
+
+<Button name="EE_EmoteRow" textalign="leftcenter">
+    <Size><AbsPoint x="176" y="27"/></Size>
+    <ResizeImages>
+        <Normal def="EA_Button_ListSortNormal"/>
+        <NormalHighlit def="EA_Button_ListSortHighlight"/>
+        <Pressed def="EA_Button_ListSortPressed"/>
+        <Disabled def="EA_Button_ListSortNormal"/>
+    </ResizeImages>
+    <Windows>
+        <FullResizeImage name="$parentTint" inherits="EA_FullResizeImage_TintableSolidBackground" layer="background" handleinput="false" alpha="0.55">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"/><Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent"/></Anchors>
+            <TintColor r="16" g="16" b="10"/>
+        </FullResizeImage>
+        <Label name="$parentLabel" font="font_clear_small" textalign="leftcenter" handleinput="false" layer="overlay">
+            <Size><AbsPoint x="142" y="27"/></Size>
+            <Anchors><Anchor point="left" relativePoint="left" relativeTo="$parent"><AbsPoint x="9" y="0"/></Anchor></Anchors>
+            <Color r="216" g="205" b="168" a="255"/>
+        </Label>
+        <Label name="$parentStar" font="font_clear_small_bold" textalign="center" handleinput="false" layer="overlay">
+            <Size><AbsPoint x="24" y="27"/></Size>
+            <Anchors><Anchor point="right" relativePoint="right" relativeTo="$parent"><AbsPoint x="-4" y="0"/></Anchor></Anchors>
+            <Color r="255" g="211" b="34" a="255"/>
+        </Label>
+    </Windows>
+</Button>
+
+<Button name="EE_FooterButton" font="font_clear_small_bold" textalign="center">
+    <Size><AbsPoint x="150" y="28"/></Size>
+    <TextColors>
+        <Normal r="255" g="211" b="34"/>
+        <NormalHighlit r="255" g="245" b="185"/>
+        <Pressed r="255" g="245" b="185"/>
+        <PressedHighlit r="255" g="245" b="185"/>
+        <Disabled r="105" g="96" b="66"/>
+    </TextColors>
+    <ResizeImages>
+        <Normal def="EA_Button_ListSortNormal"/>
+        <NormalHighlit def="EA_Button_ListSortHighlight"/>
+        <Pressed def="EA_Button_ListSortPressed"/>
+        <Disabled def="EA_Button_ListSortNormal"/>
+    </ResizeImages>
+</Button>
+
+<!-- Movable saved launcher, styled like the Emporium flat controls -->
+<Window name="EmissaryEmotes_Toggler" layer="secondary" movable="true" popable="false" handleinput="true" savesettings="true">
+    <EventHandlers>
+        <EventHandler event="OnLButtonUp" function="EmissaryEmotes.Toggle"/>
+        <EventHandler event="OnRButtonUp" function="EmissaryEmotes.ToggleLauncherLock"/>
+        <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnLauncherMouseOver"/>
+    </EventHandlers>
+    <Size><AbsPoint x="40" y="40"/></Size>
+    <Anchors>
+        <Anchor point="topleft" relativePoint="topleft" relativeTo="EA_Window_OverheadMap">
+            <AbsPoint x="130" y="255"/>
+        </Anchor>
+    </Anchors>
+    <Windows>
+        <DynamicImage name="$parentIcon" texture="EmissaryEmotesIcon"
+                      handleinput="false" textureScale="0.625" layer="overlay">
+            <Size><AbsPoint x="40" y="40"/></Size>
+        </DynamicImage>
+    </Windows>
+</Window>
+
+<Window name="EmissaryEmotesWindow" inherits="EA_Window_Default" movable="true" handleinput="true" layer="secondary" popable="false" savesettings="false">
+    <Size><AbsPoint x="820" y="510"/></Size>
+    <Anchors><Anchor point="center" relativePoint="center" relativeTo=""/></Anchors>
+    <EventHandlers><EventHandler event="OnInitialize" function="EmissaryEmotes.Initialize"/>
+        
+            <EventHandler event="OnUpdate" function="EmissaryEmotes.UpdateResize"/>
+        </EventHandlers>
+    <Windows>
+        <Window name="$parentBackground" inherits="EA_Window_DefaultBackgroundFrame"/>
+
+        <FullResizeImage name="$parentBody" inherits="EA_FullResizeImage_TintableSolidBackground" handleinput="false" alpha="0.94">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="10" y="44"/></Anchor><Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent"><AbsPoint x="-10" y="-10"/></Anchor></Anchors>
+            <TintColor r="8" g="8" b="6"/>
+        </FullResizeImage>
+
+        <Window name="$parentTitleBar" inherits="EE_TitleBar"/>
+        <Button name="$parentClose" inherits="EA_Button_DefaultWindowClose">
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.Hide"/></EventHandlers>
+        </Button>
+
+        <Label name="$parentHintLabel" font="font_clear_small" textalign="rightcenter" handleinput="false">
+            <Size><AbsPoint x="260" y="22"/></Size>
+            <Anchors><Anchor point="topright" relativePoint="topright" relativeTo="$parent"><AbsPoint x="-48" y="8"/></Anchor></Anchors>
+            <Color r="196" g="180" b="125" a="255"/>
+        </Label>
+        <Button name="$parentTab1" inherits="EE_Tab">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="14" y="46"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnTabClick"/></EventHandlers>
+        </Button>
+        <Button name="$parentTab2" inherits="EE_Tab">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="145" y="46"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnTabClick"/></EventHandlers>
+        </Button>
+        <Button name="$parentTab3" inherits="EE_Tab">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="276" y="46"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnTabClick"/></EventHandlers>
+        </Button>
+        <Button name="$parentTab4" inherits="EE_Tab">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="407" y="46"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnTabClick"/></EventHandlers>
+        </Button>
+        <Button name="$parentTab5" inherits="EE_Tab">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="538" y="46"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnTabClick"/></EventHandlers>
+        </Button>
+        <Button name="$parentTab6" inherits="EE_Tab">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="669" y="46"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnTabClick"/></EventHandlers>
+        </Button>
+
+        <Window name="$parentModeHeader">
+            <Size><AbsPoint x="792" y="26"/></Size>
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="14" y="80"/></Anchor></Anchors>
+            <Windows>
+                <FullResizeImage name="$parentBg" inherits="EA_FullResizeImage_TintableSolidBackground" handleinput="false" alpha="0.95">
+                    <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"/><Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent"/></Anchors>
+                    <TintColor r="39" g="34" b="14"/>
+                </FullResizeImage>
+                <Label name="$parentTitle" font="font_clear_small_bold" textalign="leftcenter" handleinput="false">
+                    <Size><AbsPoint x="280" y="22"/></Size>
+                    <Anchors><Anchor point="left" relativePoint="left" relativeTo="$parent"><AbsPoint x="10" y="0"/></Anchor></Anchors>
+                    <Color r="255" g="211" b="34" a="255"/>
+                </Label>
+                <Label name="$parentSub" font="font_clear_small" textalign="rightcenter" handleinput="false">
+                    <Size><AbsPoint x="330" y="22"/></Size>
+                    <Anchors><Anchor point="right" relativePoint="right" relativeTo="$parent"><AbsPoint x="-10" y="0"/></Anchor></Anchors>
+                    <Color r="180" g="166" b="112" a="255"/>
+                </Label>
+            </Windows>
+        </Window>
+
+        <FullResizeImage name="$parentContent" inherits="EA_FullResizeImage_TintableSolidBackground" handleinput="false" alpha="0.97">
+            <Size><AbsPoint x="792" y="306"/></Size>
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="14" y="112"/></Anchor></Anchors>
+            <TintColor r="5" g="5" b="4"/>
+        </FullResizeImage>
+        <Button name="$parentEmote1" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote2" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote3" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote4" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote5" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="147"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote6" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="147"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote7" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="147"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote8" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="147"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote9" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="176"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote10" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="176"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote11" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="176"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote12" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="176"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote13" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="205"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote14" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="205"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote15" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="205"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote16" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="205"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote17" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="234"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote18" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="234"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote19" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="234"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote20" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="234"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote21" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="263"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote22" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="263"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote23" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="263"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote24" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="263"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote25" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="292"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote26" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="292"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote27" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="292"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote28" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="292"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote29" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="321"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote30" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="321"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote31" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="321"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote32" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="321"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote33" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="350"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote34" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="350"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote35" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="350"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote36" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="350"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote37" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote38" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="219" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote39" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="414" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote40" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote41" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote42" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote43" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote44" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote45" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote46" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote47" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote48" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote49" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote50" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote51" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote52" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote53" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote54" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote55" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote56" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote57" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote58" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote59" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+        <Button name="$parentEmote60" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="609" y="379"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote61" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote62" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote63" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote64" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote65" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote66" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote67" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote68" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote69" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote70" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote71" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote72" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote73" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote74" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote75" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote76" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote77" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote78" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote79" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote80" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote81" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote82" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote83" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote84" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote85" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote86" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote87" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote88" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote89" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <Button name="$parentEmote90" inherits="EE_EmoteRow">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="24" y="118"/></Anchor></Anchors>
+            <EventHandlers>
+                <EventHandler event="OnLButtonUp" function="EmissaryEmotes.OnEmoteClick"/>
+                <EventHandler event="OnRButtonUp" function="EmissaryEmotes.OnFavoriteClick"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnEmoteMouseOver"/>
+            </EventHandlers>
+        </Button>
+
+        <FullResizeImage name="$parentFooterBg" inherits="EA_FullResizeImage_TintableSolidBackground" handleinput="false" alpha="0.96">
+            <Size><AbsPoint x="792" y="54"/></Size>
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="14" y="432"/></Anchor></Anchors>
+            <TintColor r="13" g="12" b="7"/>
+        </FullResizeImage>
+        <FullResizeImage name="$parentFooterRule" inherits="EA_FullResizeImage_TintableSolidBackground" handleinput="false" alpha="0.95">
+            <Size><AbsPoint x="792" y="2"/></Size>
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="14" y="432"/></Anchor></Anchors>
+            <TintColor r="235" g="188" b="18"/>
+        </FullResizeImage>
+
+        <Button name="$parentPrev" inherits="EE_FooterButton">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="28" y="446"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.PreviousPage"/></EventHandlers>
+        </Button>
+        <Label name="$parentPageLabel" font="font_clear_small_bold" textalign="center" handleinput="false">
+            <Size><AbsPoint x="430" y="28"/></Size>
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="195" y="446"/></Anchor></Anchors>
+            <Color r="255" g="211" b="34" a="255"/>
+        </Label>
+        <Button name="$parentNext" inherits="EE_FooterButton">
+            <Anchors><Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"><AbsPoint x="642" y="446"/></Anchor></Anchors>
+            <EventHandlers><EventHandler event="OnLButtonUp" function="EmissaryEmotes.NextPage"/></EventHandlers>
+        </Button>
+        <Window name="$parentResizeGrip" handleinput="true">
+            <Size><AbsPoint x="24" y="24"/></Size>
+            <Anchors>
+                <Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent">
+                    <AbsPoint x="-5" y="-5"/>
+                </Anchor>
+            </Anchors>
+            <Windows>
+                <Label name="$parentLabel" font="font_clear_small_bold"
+                       textalign="center" handleinput="false" layer="overlay">
+                    <Anchors>
+                        <Anchor point="topleft" relativePoint="topleft" relativeTo="$parent"/>
+                        <Anchor point="bottomright" relativePoint="bottomright" relativeTo="$parent"/>
+                    </Anchors>
+                    <Color r="255" g="211" b="34" a="255"/>
+                </Label>
+            </Windows>
+            <EventHandlers>
+                <EventHandler event="OnLButtonDown" function="EmissaryEmotes.StartResize"/>
+                <EventHandler event="OnMouseOver" function="EmissaryEmotes.OnResizeGripMouseOver"/>
+            </EventHandlers>
+        </Window>
+    </Windows>
+</Window>
+
+</Windows>
+</Interface>
